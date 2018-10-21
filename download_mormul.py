@@ -6,17 +6,17 @@ i = 1
 
 
 def pobierz_mormula(url):
-    local_filename = url.split('/')[-1]
+    nazwa_wykladu = url.split('/')[-1]
     r = requests.get(url, stream=True)
-    with open(local_filename, 'wb') as f:
+    with open(nazwa_wykladu, 'wb') as f:
         f.write(r.content)
 
 
 def spakuj_mormula(nazwa):
     newzip = zipfile.ZipFile('{}.zip'.format(nazwa), 'w')
-    for filename in os.listdir(os.getcwd()):
-        if filename.endswith('.pdf') and not filename.isalpha():
-            newzip.write(filename)
+    for wyklad in os.listdir(os.getcwd()):
+        if wyklad.endswith('.pdf') and not wyklad.isalpha():
+            newzip.write(wyklad)
     newzip.close()
     print("Mormul spakowany")
 
