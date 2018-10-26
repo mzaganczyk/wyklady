@@ -2,24 +2,27 @@ import requests
 import os
 import zipfile
 
-i = 1
-
 
 def pobierz_mormula(url):
-    nazwa_wykladu = url.split('/')[-1]
-    r = requests.get(url, stream=True)
-    with open(nazwa_wykladu, 'wb') as f:
-        f.write(r.content)
+    local_filename = url.split('/')[-1]
+    if local_filename in os.listdir(os.getcwd()):
+        return True
+    else:
+        r = requests.get(url, stream=True)
+        with open(local_filename, 'wb') as f:
+            f.write(r.content)
 
 
 def spakuj_mormula(nazwa):
     newzip = zipfile.ZipFile('{}.zip'.format(nazwa), 'w')
-    for wyklad in os.listdir(os.getcwd()):
-        if wyklad.endswith('.pdf') and not wyklad.isalpha():
-            newzip.write(wyklad)
+    for filename in os.listdir(os.getcwd()):
+        if filename.endswith('.pdf'):
+            newzip.write(filename)
     newzip.close()
-    print("Mormul spakowany")
+    print("Mormul spakowany.")
 
+
+i = 1
 
 while True:
     url = 'https://www.mimuw.edu.pl/~mormul/w{}.pdf'.format(i)
@@ -28,6 +31,9 @@ while True:
         spakuj_mormula("mormul")
         break
     else:
-        pobierz_mormula(url)
-        print("Mormul {} pobrany".format(i))
-        i += 1
+        if pobierz_mormula(url):
+            print("Mormul {} juz jest.".format(i))
+        else:
+            pobierz_mormula(url)
+            print("Mormul {} pobrany.".format(i))
+    i += 1
