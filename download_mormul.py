@@ -2,11 +2,11 @@ import requests
 import os
 import zipfile
 
-
 '''
 Skrypt pozwala na pobieranie skrypcików z analizy, v. 0.0.0.0.0.0.1
 Marcinek
 '''
+
 
 def pobierz_mormula(url):
     nazwa_wykladu = url.split('/')[-1]
