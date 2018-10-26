@@ -34,7 +34,14 @@ while True:
     if requests.get(url).status_code != 200:
         print("Mormul nie ma wiecej :(")
         spakuj_mormula("mormul")
-        break
+        usun = bool(input("Chcesz usunac pdfy? 'True', 'False' "))
+        if usun:
+            for wyklad in range(1, i):
+                os.remove("w{}.pdf".format(wyklad))
+            print("Wyklady usuniete.")
+            break
+        else:
+            break
     else:
         if pobierz_mormula(url):
             print("Mormul {} juz jest.".format(i))
