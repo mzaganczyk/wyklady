@@ -3,21 +3,26 @@ import os
 import zipfile
 
 
+'''
+Skrypt pozwala na pobieranie skrypcików z analizy, v. 0.0.0.0.0.0.1
+Marcinek
+'''
+
 def pobierz_mormula(url):
-    local_filename = url.split('/')[-1]
-    if local_filename in os.listdir(os.getcwd()):
+    nazwa_wykladu = url.split('/')[-1]
+    if nazwa_wykladu in os.listdir(os.getcwd()):
         return True
     else:
         r = requests.get(url, stream=True)
-        with open(local_filename, 'wb') as f:
+        with open(nazwa_wykladu, 'wb') as f:
             f.write(r.content)
 
 
 def spakuj_mormula(nazwa):
     newzip = zipfile.ZipFile('{}.zip'.format(nazwa), 'w')
-    for filename in os.listdir(os.getcwd()):
-        if filename.endswith('.pdf'):
-            newzip.write(filename)
+    for wyklad in os.listdir(os.getcwd()):
+        if wyklad.endswith('.pdf'):
+            newzip.write(wyklad)
     newzip.close()
     print("Mormul spakowany.")
 
