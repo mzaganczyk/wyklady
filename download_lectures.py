@@ -40,7 +40,7 @@ while True:
         if requests.get(url).status_code != 200:
             print('Nie ma wiecej wykladow.')
             spakuj_wyklady('wyklady')
-            usuwanie = input('Czy chcesz usunac pdfy? "Tak", "Nie".').lower()
+            usuwanie = input('Czy chcesz usunac pdfy? "Tak", "Nie".\n').lower()
             if usuwanie == "tak":
                 for wyklad in range(1,i):
                     os.remove(f'w{wyklad}.pdf')
