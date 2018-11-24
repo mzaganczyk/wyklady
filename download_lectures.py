@@ -2,6 +2,7 @@ import requests
 import os
 import zipfile
 from tqdm import tqdm
+import math
 
 '''
 Skrypt pozwala na pobieranie skrypcików z analizy, v. 0.0.0.0.0.0.1.2
@@ -22,6 +23,7 @@ def pobierz_wyklady(url):
             f.write(plik)
             pobrany += rozmiarpobrany
 
+
 def spakuj_wyklady(nazwa):
     newzip = zipfile.ZipFile(f'{nazwa}.zip', 'w')
     for wyklad in os.listdir(os.getcwd()):
@@ -29,6 +31,14 @@ def spakuj_wyklady(nazwa):
             newzip.write(wyklad)
     newzip.close()
     print("Wyklady spakowane.")
+
+
+def usun_wyklady():
+    usuwanie = input('Czy chcesz usunac pdfy? "Tak", "Nie".').lower()
+    if usuwanie == "tak":
+        for wyklad in range(1, i):
+            os.remove(f'w{wyklad}.pdf')
+        print("Wyklady usuniete.")
 
 
 i = 1
@@ -40,14 +50,8 @@ while True:
         if requests.get(url).status_code != 200:
             print('Nie ma wiecej wykladow.')
             spakuj_wyklady('wyklady')
-            usuwanie = input('Czy chcesz usunac pdfy? "Tak", "Nie".\n').lower()
-            if usuwanie == "tak":
-                for wyklad in range(1,i):
-                    os.remove(f'w{wyklad}.pdf')
-                print("Wyklady usuniete.")
-                break
-            else:
-                break
+            usun_wyklady()
+            break
         pobierz_wyklady(url)
         print(f'Wyklad {i} pobrany.')
     else:
