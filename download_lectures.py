@@ -2,7 +2,6 @@ import requests
 import os
 import zipfile
 from tqdm import tqdm
-import math
 
 '''
 Skrypt pozwala na pobieranie skrypcików z analizy, v. 0.0.0.0.0.0.1.2
